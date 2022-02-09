@@ -12,4 +12,12 @@ class Item extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    protected $fillable = [
+        'name',
+        'price',
+        'quantity',
+        'availability',
+        'category_id'
+    ];
 }
