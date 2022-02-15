@@ -16,7 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::with("category")->get();
         return response()->json($items);
     }
 
@@ -52,7 +52,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $i = Item::findOrFail($id);
+        $i = Item::with("category")->findOrFail($id);
         return response()->json($i);
     }
 
