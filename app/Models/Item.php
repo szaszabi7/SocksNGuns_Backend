@@ -13,6 +13,10 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function review() {
+        return $this->hasMany(Review::class);
+    }
+
     protected $fillable = [
         'name',
         'price',

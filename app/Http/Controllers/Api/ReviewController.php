@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::with("category")->get();
-        return response()->json($items);
+        $reviews = Review::with("user", "item")->get();
+        return response()->json($reviews);
     }
 
     /**
@@ -27,10 +27,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $i = New Item();
-        $i->fill($request->all());
-        $i->save();
-        return response()->json($i, 201);
+        $r = New Review();
+        $r->fill($request->all());
+        $r->save();
+        return response()->json($r, 201);
     }
 
     /**
@@ -41,11 +41,11 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $i = Item::with("category")->find($id);
-        if (is_null($i)) {
-            return response()->json(['message' => 'Ez a termék nem létezik'], 404);
+        $r = Review::with("user", "item")->find($id);
+        if (is_null($r)) {
+            return response()->json(['message' => 'Ez az értékelés nem létezik'], 404);
         } else {
-            return response()->json($i);
+            return response()->json($r);
         }
     }
 
@@ -58,10 +58,10 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $i = Item::findOrFail($id);
-        $i->fill($request->all());
-        $i->save();
-        return response()->json($i, 200);
+        $r = Review::findOrFail($id);
+        $r->fill($request->all());
+        $r->save();
+        return response()->json($r, 200);
     }
 
     /**
@@ -72,7 +72,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        Item::destroy($id);
+        Review::destroy($id);
         return response()->noContent();
     }
 }

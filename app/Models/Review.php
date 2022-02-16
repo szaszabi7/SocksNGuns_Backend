@@ -9,7 +9,20 @@ class Review extends Model
 {
     use HasFactory;
 
-    public function review() {
-        return $this->hasMany(User::class);
+    public function user() {
+        return $this->belongsTo(User::class);
     }
+
+    public function item() {
+        return $this->belongsTo(Item::class);
+    }
+
+    protected $fillable = [
+        'name',
+        'user_id',
+        'item_id',
+        'message',
+        'star',
+        'recommend'
+    ];
 }

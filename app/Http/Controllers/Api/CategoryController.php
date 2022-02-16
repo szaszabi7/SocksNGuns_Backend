@@ -20,16 +20,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -51,19 +41,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $c = Category::findOrFail($id);
-        return response()->json($c);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $c = Category::with("category")->find($id);
+        if (is_null($c)) {
+            return response()->json(['message' => 'Ez a kategória nem létezik'], 404);
+        } else {
+            return response()->json($c);
+        }
     }
 
     /**

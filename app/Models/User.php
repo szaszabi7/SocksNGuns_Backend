@@ -12,8 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function userReview() {
-        return $this->belongsTo(Review::class);
+    public function review() {
+        return $this->hasMany(Review::class);
     }
 
     /**
