@@ -22,7 +22,7 @@ class CreatePersonalInformationTable extends Migration
             $table->string("first_name");
             $table->string("last_name");
             $table->date("birth_date");
-            $table->string("phone_number");
+            $table->string("phone_number")->unique();
             $table->string("post_code");
             $table->string("city");
             $table->string("street");

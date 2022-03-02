@@ -17,6 +17,10 @@ class Item extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function cartItem() {
+        return $this->hasMany(CartItem::class);
+    }
+
     protected $fillable = [
         'name',
         'price',
