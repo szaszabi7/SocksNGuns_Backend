@@ -28,6 +28,13 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $i = New Item();
+        $request->validation([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'availability' => 'required',
+            'category_id' => 'required'
+        ]);
         $i->fill($request->all());
         $i->save();
         return response()->json($i, 201);
@@ -74,5 +81,16 @@ class ItemController extends Controller
     {
         Item::destroy($id);
         return response()->noContent();
+    }
+
+    /**
+     * Szörcs
+     *
+     * @param  str  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function search($name)
+    {
+        return Item::where('name', 'like', '%' . $name . '%')->get();
     }
 }
