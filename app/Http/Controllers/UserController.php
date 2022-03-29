@@ -43,7 +43,7 @@ class UserController extends Controller
 
         if(!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Nem megfelelő jelszó'
+                'message' => 'Helytelen felhasználónév vagy jelszó'
             ], 401);
         }
 

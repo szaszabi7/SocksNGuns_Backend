@@ -32,11 +32,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/items/{id}', [ItemController::class, 'update']);
     Route::delete('/items/{id}', [ItemController::class, 'destroy']);
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::resource('/personal_informations', PersonalInformationController::class);
 });
-
-//Route::resource('items', ItemController::class);
-//Route::get('/items', [ItemController::class, 'index']);
-
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -45,4 +42,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::resource('/items', ItemController::class);
 Route::resource('/categories', CategoryController::class);
 Route::resource('/reviews', ReviewController::class);
-Route::resource('/personal_informations', PersonalInformationController::class);
+
