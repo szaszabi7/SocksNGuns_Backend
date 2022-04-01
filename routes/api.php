@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\PersonalInformationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\ReviewController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,11 +31,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/items/{id}', [ItemController::class, 'update']);
     Route::delete('/items/{id}', [ItemController::class, 'destroy']);
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/user', [UserController::class, 'currentUser']);
     Route::resource('/personal_informations', PersonalInformationController::class);
-});
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 //Route::resource('/items', ItemController::class);

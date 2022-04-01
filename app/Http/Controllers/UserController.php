@@ -65,4 +65,9 @@ class UserController extends Controller
         ];
     }
 
+    public function currentUser() {
+        $user = auth()->user();
+        return response($user);
+    }
+
 }
