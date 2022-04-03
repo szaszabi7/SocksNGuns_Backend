@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return response()->json($categories);
+        $users = User::all();
+        return response()->json($users);
     }
 
     /**
@@ -27,10 +27,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $c = New Category();
-        $c->fill($request->all());
-        $c->save();
-        return response()->json($c, 201);
+        //
     }
 
     /**
@@ -41,11 +38,11 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $c = Category::findOrFail($id);
-        if (is_null($c)) {
-            return response()->json(['message' => 'Ez a kategória nem létezik'], 404);
+        $user = User::findOrFail($id);
+        if (is_null($user)) {
+            return response()->json(['message' => 'Ez a felhasználó nem létezik'], 404);
         } else {
-            return response()->json($c);
+            return response()->json($user);
         }
     }
 
@@ -58,10 +55,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $c = Category::findOrFail($id);
-        $c->fill($request->all());
-        $c->save();
-        return response()->json($c, 200);
+        $user = User::findOrFail($id);
+        $user->fill($request->all());
+        $user->save();
+        return response()->json($user, 200);
     }
 
     /**
@@ -72,7 +69,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
+        User::destroy($id);
         return response()->noContent();
+    }
+
+    public function userCount() {
+        $users = User::all()->count();
+        return response()->json($users);
     }
 }

@@ -3,8 +3,9 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\PersonalInformationController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Publikus utak
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/items', [ItemController::class, 'index']);
 Route::get('/items/{id}', [ItemController::class, 'show']);
 Route::get('/items/search/{name}', [ItemController::class, 'search']);
@@ -30,10 +31,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/items', [ItemController::class, 'store']);
     Route::put('/items/{id}', [ItemController::class, 'update']);
     Route::delete('/items/{id}', [ItemController::class, 'destroy']);
-    Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/user', [UserController::class, 'currentUser']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'currentUser']);
     Route::resource('/personal_informations', PersonalInformationController::class);
+    Route::get('/item/count', [ItemController::class, 'itemCount']);
+    Route::get('/user/count', [UserController::class, 'userCount']);
 });
+Route::resource('/users', UserController::class);
 
 //Route::resource('/items', ItemController::class);
 Route::resource('/categories', CategoryController::class);

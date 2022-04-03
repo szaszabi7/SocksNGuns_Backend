@@ -93,4 +93,9 @@ class ItemController extends Controller
     {
         return Item::where('name', 'like', '%' . $name . '%')->get();
     }
+
+    public function itemCount() {
+        $items = Item::all()->count();
+        return response()->json($items);
+    }
 }
