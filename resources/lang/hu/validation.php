@@ -126,5 +126,6 @@ return [
 
     'attributes' => [
         'password' => 'jelszó',
+        'name' => 'felhasználónév'
     ],
 ];
