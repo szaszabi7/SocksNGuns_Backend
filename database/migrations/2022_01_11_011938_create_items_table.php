@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->string("name");
             $table->integer("price");
             $table->integer("quantity");
-            $table->tinyInteger("availability");
+            $table->tinyInteger("availability")->default(1);
             $table->foreignIdFor(Category::class)
                 ->nullable()
                 ->constrained()

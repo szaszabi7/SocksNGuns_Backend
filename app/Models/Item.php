@@ -25,7 +25,6 @@ class Item extends Model
         'name',
         'price',
         'quantity',
-        'availability',
         'category_id'
     ];
 }

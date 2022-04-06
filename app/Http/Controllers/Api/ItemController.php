@@ -28,11 +28,10 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $i = New Item();
-        $request->validation([
+        $request->validate([
             'name' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            'availability' => 'required',
             'category_id' => 'required'
         ]);
         $i->fill($request->all());
