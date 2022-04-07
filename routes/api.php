@@ -25,6 +25,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/items', [ItemController::class, 'index']);
 Route::get('/items/{id}', [ItemController::class, 'show']);
 Route::get('/items/search/{name}', [ItemController::class, 'search']);
+Route::resource('/reviews', ReviewController::class);
 
 //Pretektált utak
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -36,10 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/personal_informations', PersonalInformationController::class);
     Route::get('/item/count', [ItemController::class, 'itemCount']);
     Route::get('/user/count', [UserController::class, 'userCount']);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/users', UserController::class);
 });
-Route::resource('/users', UserController::class);
 
-//Route::resource('/items', ItemController::class);
-Route::resource('/categories', CategoryController::class);
-Route::resource('/reviews', ReviewController::class);
 
