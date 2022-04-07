@@ -47,7 +47,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $i = Item::with("category")->find($id);
+        $i = Item::find($id);
         if (is_null($i)) {
             return response()->json(['message' => 'Ez a termék nem létezik'], 404);
         } else {
