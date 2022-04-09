@@ -86,4 +86,13 @@ class UserController extends Controller
         User::find(auth()->user()->id)->update(['password'=> bcrypt($request->password)]);
         return response()->json(["message" => "Jelszó sikeresen megváltoztatva"], 200);
     }
+
+    public function changeUsername(Request $request) {
+        $request->validate([
+            'name' => 'required|string|unique:users,name|min:5'
+        ]);
+
+        User::find(auth()->user()->id)->update(['name'=> $request->name]);
+        return response()->json(["message" => "Felhasználónév sikeresen megváltoztatva"], 200);
+    }
 }
