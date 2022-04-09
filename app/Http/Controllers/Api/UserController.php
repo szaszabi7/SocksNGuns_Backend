@@ -77,4 +77,13 @@ class UserController extends Controller
         $users = User::all()->count();
         return response()->json($users);
     }
+
+    public function changePassword(Request $request) {
+        $request->validate([
+            'password' => 'required|string|confirmed|min:8',
+        ]);
+
+        User::find(auth()->user()->id)->update(['password'=> bcrypt($request->password)]);
+        return response()->json(["message" => "Jelszó sikeresen megváltoztatva"], 200);
+    }
 }
