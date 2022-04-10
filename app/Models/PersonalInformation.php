@@ -12,4 +12,13 @@ class PersonalInformation extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'full_name',
+        'phone_number',
+        'post_code',
+        'city',
+        'address',
+        "user_id"
+    ];
 }

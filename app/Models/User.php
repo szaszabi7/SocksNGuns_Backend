@@ -18,7 +18,7 @@ class User extends Authenticatable
     }
 
     public function personal_information() {
-        return $this->hasMany(Review::class);
+        return $this->hasOne(Review::class);
     }
 
     /**

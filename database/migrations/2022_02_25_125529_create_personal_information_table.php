@@ -19,16 +19,11 @@ class CreatePersonalInformationTable extends Migration
             $table->foreignIdFor(User::class)
                     ->constrained()
                     ->onDelete('cascade');
-            $table->string("first_name");
-            $table->string("last_name");
-            $table->date("birth_date");
+            $table->string("full_name");
             $table->string("phone_number")->unique();
             $table->string("post_code");
             $table->string("city");
-            $table->string("street");
-            $table->integer("street_number");
-            $table->integer("floor");
-            $table->integer("door");
+            $table->string("address");
             $table->timestamps();
         });
     }

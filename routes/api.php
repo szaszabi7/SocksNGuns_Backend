@@ -37,11 +37,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/change_password', [UserController::class, 'changePassword']);
     Route::put('/change_username', [UserController::class, 'changeUsername']);
     Route::put('/change_email', [UserController::class, 'changeEmail']);
-    Route::resource('/personal_informations', PersonalInformationController::class);
     Route::get('/item/count', [ItemController::class, 'itemCount']);
     Route::get('/user/count', [UserController::class, 'userCount']);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/users', UserController::class);
+    Route::get('/personal_information', [PersonalInformationController::class, 'show']);
+    Route::post('/personal_information', [PersonalInformationController::class, 'store']);
+    Route::put('/personal_information/{id}', [PersonalInformationController::class, 'update']);
 });
 
 

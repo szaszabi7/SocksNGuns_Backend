@@ -9,17 +9,6 @@ use Illuminate\Http\Request;
 class PersonalInformationController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $pers = PersonalInformation::with("user")->get();
-        return response()->json($pers);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -30,7 +19,7 @@ class PersonalInformationController extends Controller
         $p = New PersonalInformation();
         $p->fill($request->all());
         $p->save();
-        return response()->json($p, 201);
+        return response()->json(["message" => "Adatkok sikeresen elmentve"], 201);
     }
 
     /**
@@ -39,11 +28,11 @@ class PersonalInformationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $p = PersonalInformation::with("user")->find($id);
+        $p = PersonalInformation::where('user_id', auth()->user()->id)->first();
         if (is_null($p)) {
-            return response()->json(['message' => 'Ez a felhasználó nem létezik'], 404);
+            return response()->json(['message' => 'Nincs adat'], 404);
         } else {
             return response()->json($p);
         }
@@ -58,10 +47,17 @@ class PersonalInformationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'full_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'post_code' => 'required|string',
+            'city' => 'required|string',
+            'address' => 'required|string'
+        ]);
         $p = PersonalInformation::findOrFail($id);
         $p->fill($request->all());
         $p->save();
-        return response()->json($p, 200);
+        return response()->json(["message" => "Adatkok sikeresen módosítva"], 200);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonalInformationFactory extends Factory
@@ -14,17 +15,12 @@ class PersonalInformationFactory extends Factory
     public function definition()
     {
         return [
-            "user_id" => $this->faker->numberBetween(1, 10),
-            "first_name" => $this->faker->firstName(),
-            "last_name" => $this->faker->lastName(),
-            "birth_date" => $this->faker->date(),
+            "user_id" => User::all()->random(),
+            "full_name" => $this->faker->name(),
             "phone_number" => $this->faker->e164PhoneNumber(),
             "post_code" => $this->faker->postcode(),
             "city" => $this->faker->city(),
-            "street" => $this->faker->streetName(),
-            "street_number" => $this->faker->buildingNumber(),
-            "floor" => $this->faker->numberBetween(0, 10),
-            "door" => $this->faker->numberBetween(1, 50),
+            "address" => $this->faker->streetAddress()
         ];
     }
 }
