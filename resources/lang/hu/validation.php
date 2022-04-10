@@ -31,7 +31,7 @@ return [
     'digits_between'       => 'A(z) :attribute értéke :min és :max közötti számjegy lehet!',
     'dimensions'           => 'A(z) :attribute felbontása nem megfelelő.',
     'distinct'             => 'A(z) :attribute értékének egyedinek kell lennie!',
-    'email'                => 'A(z) :attribute nem érvényes email formátum.',
+    'email'                => 'Nem érvényes email formátum.',
     'ends_with'            => 'A(z) :attribute a következővel kell végződjön: :values',
     'enum'                 => 'The selected :attribute is invalid.',
     'exists'               => 'A kiválasztott :attribute érvénytelen.',

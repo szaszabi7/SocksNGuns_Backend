@@ -95,4 +95,13 @@ class UserController extends Controller
         User::find(auth()->user()->id)->update(['name'=> $request->name]);
         return response()->json(["message" => "Felhasználónév sikeresen megváltoztatva"], 200);
     }
+
+    public function changeEmail(Request $request) {
+        $request->validate([
+            'email' => 'required|string|unique:users,email|email',
+        ]);
+
+        User::find(auth()->user()->id)->update(['email'=> $request->email]);
+        return response()->json(["message" => "Email cím sikeresen megváltoztatva"], 200);
+    }
 }

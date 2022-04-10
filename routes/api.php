@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [AuthController::class, 'currentUser']);
     Route::put('/change_password', [UserController::class, 'changePassword']);
     Route::put('/change_username', [UserController::class, 'changeUsername']);
+    Route::put('/change_email', [UserController::class, 'changeEmail']);
     Route::resource('/personal_informations', PersonalInformationController::class);
     Route::get('/item/count', [ItemController::class, 'itemCount']);
     Route::get('/user/count', [UserController::class, 'userCount']);
