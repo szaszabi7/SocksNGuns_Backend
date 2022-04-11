@@ -132,5 +132,8 @@ return [
         'address' => 'cím',
         'post_code' => 'írányítószám',
         'city' => 'város',
+        'price' => 'ár',
+        'category_id' => 'kategória',
+        'quantity' => 'mennyiség',
     ],
 ];
