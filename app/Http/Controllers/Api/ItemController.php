@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class ItemController extends Controller
 {
@@ -27,15 +29,20 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $i = New Item();
-        $request->validate([
+        $data =$request->validate([
             'name' => 'required',
+            'image' => 'string',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required'
         ]);
-        $i->fill($request->all());
-        $i->save();
+        if (isset($data['image'])) {
+            $relativePath = $this->saveImage($data['image']);
+            $data['image'] = $relativePath;
+        }
+
+
+        $i = Item::create($data);
         return response()->json($i, 201);
     }
 
@@ -96,5 +103,35 @@ class ItemController extends Controller
     public function itemCount() {
         $items = Item::all()->count();
         return response()->json($items);
+    }
+
+    private function saveImage($image) {
+        if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
+            $image = substr($image, strpos($image, ',') + 1);
+            $type = strtolower($type[1]);
+
+            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                throw new \Exception('invalid image type');
+            }
+            $image = str_replace(' ', '+', $image);
+            $image = base64_decode($image);
+
+            if ($image === false) {
+                throw new \Exception('base64_decode failed');
+            }
+        } else {
+            throw new \Exception('did not match data URI with image data');
+        }
+
+        $dir = 'images/';
+        $file = Str::random() . '.' . $type;
+        $absolutePath = public_path($dir);
+        $relativePath = $dir . $file;
+        if (!File::exists($absolutePath)) {
+            File::makeDirectory($absolutePath, 0755, true);
+        }
+        file_put_contents($relativePath, $image);
+
+        return $relativePath;
     }
 }
