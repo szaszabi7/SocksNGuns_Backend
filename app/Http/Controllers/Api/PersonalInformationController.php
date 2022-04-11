@@ -16,10 +16,17 @@ class PersonalInformationController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'full_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'post_code' => 'required|string',
+            'city' => 'required|string',
+            'address' => 'required|string'
+        ]);
         $p = New PersonalInformation();
         $p->fill($request->all());
         $p->save();
-        return response()->json(["message" => "Adatkok sikeresen elmentve"], 201);
+        return response()->json(["message" => "Adatkok sikeresen hozzáadva"], 201);
     }
 
     /**
@@ -30,7 +37,7 @@ class PersonalInformationController extends Controller
      */
     public function show()
     {
-        $p = PersonalInformation::where('user_id', auth()->user()->id)->first();
+        $p = PersonalInformation::where('user_id', auth()->user()->id)->get();
         if (is_null($p)) {
             return response()->json(['message' => 'Nincs adat'], 404);
         } else {
@@ -69,6 +76,6 @@ class PersonalInformationController extends Controller
     public function destroy($id)
     {
         PersonalInformation::destroy($id);
-        return response()->noContent();
+        return response()->json(["message" => "Adatkok sikeresen törölve"], 200);
     }
 }

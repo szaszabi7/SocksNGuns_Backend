@@ -41,9 +41,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user/count', [UserController::class, 'userCount']);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/users', UserController::class);
-    Route::get('/personal_information', [PersonalInformationController::class, 'show']);
     Route::post('/personal_information', [PersonalInformationController::class, 'store']);
+    Route::get('/personal_information', [PersonalInformationController::class, 'show']);
     Route::put('/personal_information/{id}', [PersonalInformationController::class, 'update']);
+    Route::delete('/personal_information/{id}', [PersonalInformationController::class, 'destroy']);
 });
 
 

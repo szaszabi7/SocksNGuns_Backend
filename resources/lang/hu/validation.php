@@ -126,6 +126,11 @@ return [
 
     'attributes' => [
         'password' => 'jelszó',
-        'name' => 'név'
+        'name' => 'név',
+        'full_name' => 'név',
+        'phone_number' => 'telefonszám',
+        'address' => 'cím',
+        'post_code' => 'írányítószám',
+        'city' => 'város',
     ],
 ];
