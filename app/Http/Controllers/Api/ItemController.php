@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
@@ -29,13 +30,14 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $data =$request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'image' => 'string',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required'
         ]);
+        
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
@@ -58,7 +60,7 @@ class ItemController extends Controller
         if (is_null($i)) {
             return response()->json(['message' => 'Ez a termék nem létezik'], 404);
         } else {
-            return response()->json($i);
+            return new ItemResource($i);
         }
     }
 
@@ -66,15 +68,31 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Item $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Item $item)
     {
-        $i = Item::findOrFail($id);
-        $i->fill($request->all());
-        $i->save();
-        return response()->json($i, 200);
+        $data = $request->validate([
+            'name' => 'required',
+            'image' => 'string',
+            'price' => 'required',
+            'quantity' => 'required',
+            'category_id' => 'required'
+        ]);
+
+        if (isset($data['image'])) {
+            $relativePath = $this->saveImage($data['image']);
+            $data['image'] = $relativePath;
+
+            if ($item->image) {
+                $absolutePath = public_path($item->image);
+                File::delete($absolutePath);
+            }
+        }
+
+        $item->update($data);
+        return response()->json($item, 200);
     }
 
     /**

@@ -14,7 +14,7 @@ class AddImageColumnToItemsTable extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->string("image")->default("no_image.png")->after("id");
+            $table->string("image")->default("images/no_image.png")->after("id");
         });
     }
 
