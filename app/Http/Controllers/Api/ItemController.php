@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ItemResource;
+use App\Http\Resources\ItemsResource;
 
 class ItemController extends Controller
 {
@@ -32,7 +33,7 @@ class ItemController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'image' => 'string',
+            'image' => 'string|nullable',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required'
@@ -68,14 +69,16 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item $item
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, $id)
     {
+
+        $item = Item::findOrFail($id);
         $data = $request->validate([
             'name' => 'required',
-            'image' => 'string',
+            'image' => 'string|nullable',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required'
@@ -92,7 +95,7 @@ class ItemController extends Controller
         }
 
         $item->update($data);
-        return response()->json($item, 200);
+        return response()->json([ "success" => "Sikeres módosítás"], 200);
     }
 
     /**

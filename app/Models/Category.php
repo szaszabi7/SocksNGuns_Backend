@@ -12,7 +12,13 @@ class Category extends Model
     public function items() {
         return $this->hasMany(Item::class);
     }
+
     protected $fillable = [
+        "name"
+    ];
+
+    protected $visible = [
+        "id",
         "name"
     ];
 }
