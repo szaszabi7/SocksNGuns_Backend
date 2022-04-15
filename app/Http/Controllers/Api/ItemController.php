@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ItemResource;
-use App\Http\Resources\ItemsResource;
 
 class ItemController extends Controller
 {
@@ -118,7 +117,12 @@ class ItemController extends Controller
      */
     public function search($name)
     {
-        return Item::where('name', 'like', '%' . $name . '%')->get();
+        $items = Item::where('name', 'like', '%' . $name . '%')->get();
+        if (count($items) === 0) {
+            return response()->json(['message' => 'Ez a termék nem létezik'], 404);
+        } else {
+            return response()->json($items);
+        }
     }
 
     public function itemCount() {
