@@ -21,6 +21,10 @@ class User extends Authenticatable
         return $this->hasOne(Review::class);
     }
 
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

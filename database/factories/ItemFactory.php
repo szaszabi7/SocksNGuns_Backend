@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemFactory extends Factory
@@ -18,7 +19,7 @@ class ItemFactory extends Factory
             "price" => $this->faker->numberBetween(500, 10000000),
             "quantity" => $this->faker->numberBetween(1, 30000),
             "availability" => 1,
-            "category_id" => $this->faker->numberBetween(1, 2),
+            "category_id" => Category::all()->random()
         ];
     }
 }
