@@ -22,7 +22,7 @@ class ItemsResource extends JsonResource
             "price" => $this->price,
             "quantity" => $this->quantity,
             "availability" => $this->availability,
-            "category" => CategoryResource::collection($this->category),
+            "category" => $this->category,
             "category_id" => $this->category_id
         ];
     }
