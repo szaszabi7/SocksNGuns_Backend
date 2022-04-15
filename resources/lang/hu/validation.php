@@ -135,5 +135,7 @@ return [
         'price' => 'ár',
         'category_id' => 'kategória',
         'quantity' => 'mennyiség',
+        'total_price' => 'teljes összeg',
+        'status' => 'státusz'
     ],
 ];

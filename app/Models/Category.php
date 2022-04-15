@@ -14,11 +14,11 @@ class Category extends Model
     }
 
     protected $fillable = [
-        "name"
+        'name'
     ];
 
     protected $visible = [
-        "id",
-        "name"
+        'id',
+        'name'
     ];
 }

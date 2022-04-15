@@ -19,6 +19,6 @@ class PersonalInformation extends Model
         'post_code',
         'city',
         'address',
-        "user_id"
+        'user_id'
     ];
 }

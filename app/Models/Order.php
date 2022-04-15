@@ -16,4 +16,10 @@ class Order extends Model
     public function order_item() {
         return $this->belongsTo(OrderItem::class);
     }
+
+    protected $fillable = [
+        'status',
+        'user_id',
+        'total_price'
+    ];
 }
