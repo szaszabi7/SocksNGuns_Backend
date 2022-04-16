@@ -15,7 +15,8 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        //
+        $orderItems = OrderItem::all();
+        return response()->json($orderItems);
     }
 
     /**
@@ -26,7 +27,13 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $items = $request->all();
+        
+        foreach ($items as $item) {
+            OrderItem::create($item);
+        }
+        
+        return response()->json(["success" => "Adatok sikeresen hozzáadva"], 201);
     }
 
     /**

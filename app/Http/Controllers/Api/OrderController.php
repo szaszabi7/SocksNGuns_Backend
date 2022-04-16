@@ -28,13 +28,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            "status" => "required|string",
-            "user_id" => "required|integer",
             "total_price" => "required|integer|min:0"
         ]);
 
-        $order = Order::create($data);
-        return response()->json($order, 201);
+        Order::create([
+            "user_id" => auth()->user()->id,
+            "total_price" => $data["total_price"]
+        ]);
+        return response()->json([ "success" => "Rendelés sikeresen elküldve"], 201);
     }
 
     /**

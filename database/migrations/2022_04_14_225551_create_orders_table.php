@@ -16,11 +16,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string("status")->default("Feldolgozásra vár");
             $table->foreignIdFor(User::class)
                     ->nullable()
                     ->constrained()
-                    ->onDelete('SET NULL');;
+                    ->onDelete('SET NULL');
+            $table->string("status")->default("Feldolgozásra vár");
             $table->integer("total_price");
             $table->timestamps();
         });

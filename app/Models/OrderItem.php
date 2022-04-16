@@ -18,6 +18,8 @@ class OrderItem extends Model
     }
 
     protected $fillable = [
-        'item_id'
+        'item_id',
+        'order_id',
+        'quantity'
     ];
 }

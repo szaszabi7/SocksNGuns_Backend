@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderItemController;
 use App\Http\Controllers\Api\PersonalInformationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\ReviewController;
@@ -67,4 +68,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     /* #endregion */
 
     Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
+
+    Route::get('/order_items', [OrderItemController::class, 'index']);
+    Route::post('/order_items', [OrderItemController::class, 'store']);
 });
