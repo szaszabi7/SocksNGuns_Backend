@@ -19,6 +19,7 @@ class ItemsResource extends JsonResource
             "id" => $this->id,
             "image" => $this->image ? URL::to($this->image) : null,
             "name" => $this->name,
+            "description" => $this->description,
             "price" => $this->price,
             "quantity" => $this->quantity,
             "availability" => $this->availability,
