@@ -125,7 +125,7 @@ class ItemController extends Controller
         if (count($items) === 0) {
             return response()->json(['message' => 'Ez a termék nem létezik'], 404);
         } else {
-            return ItemsResource::collection($items);
+            return ItemsResource::collection($items)->toArray("data");
         }
     }
 
