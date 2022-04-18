@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ItemResource;
 use App\Http\Resources\ItemsResource;
+use Illuminate\Support\Facades\URL;
 
 class ItemController extends Controller
 {
@@ -20,7 +21,7 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
-        return ItemsResource::collection($items);
+        return ItemsResource::collection($items)->toArray("data");
     }
 
     /**
@@ -57,11 +58,13 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $i = Item::find($id);
+        $i = Item::findOrFail($id);
+        $i->image = $i->image ? URL::to($i->image) : null;
+        $i->category;
         if (is_null($i)) {
             return response()->json(['message' => 'Ez a termék nem létezik'], 404);
         } else {
-            return new ItemResource($i);
+            return response()->json($i);
         }
     }
 
