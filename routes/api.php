@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::put('/orders/{order}', [OrderController::class, 'update']);
+    Route::post('/orders/new', [OrderController::class, 'order']);
     /* #endregion */
 
     /* #region  User */

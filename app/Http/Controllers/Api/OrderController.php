@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -15,27 +17,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy("created_at", "DESC")->get();
         return response()->json($orders);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            "total_price" => "required|integer|min:0"
-        ]);
-
-        $orderItem = Order::create([
-            "user_id" => auth()->user()->id,
-            "total_price" => $data["total_price"]
-        ]);
-        return response()->json([ "success" => "Rendelés sikeresen létrehozva", $orderItem], 201);
     }
 
     /**
@@ -57,7 +40,7 @@ class OrderController extends Controller
     //Bejelentkezett user összes rendelését adja vissza.
     public function userOrders()
     {
-        $order = Order::where('user_id', auth()->user()->id)->get();
+        $order = Order::where('user_id', auth()->user()->id)->orderBy("created_at", "DESC")->get();
         if (is_null($order)) {
             return response()->json(['message' => 'Nincs adat'], 404);
         } else {
@@ -108,5 +91,37 @@ class OrderController extends Controller
     public function getNewOrders() {
         $orders = Order::where("status", "Feldolgozásra vár")->get();
         return response()->json($orders);
+    }
+
+    public function order(Request $request) {
+        $orderlist = $request->all();
+        $order = new Order();
+        $order->fill(['user_id' => auth()->user()->id,
+                    'total_price' => 0]);
+        $order->save();
+        $orderId = $order->id;
+
+        $totalPrice = 0;
+        foreach ($orderlist as $item) {
+            if (Item::where('id', $item['item_id'])->count() == 0) {
+                Order::destroy($orderId);
+                return response()->json(["message" => "Nincs ilyen id: " . $item['item_id']], 404);
+            }
+            $orderItem = new OrderItem();
+            $orderItem->fill([
+                'order_id' => $orderId,
+                'item_id' => $item['item_id'],
+                'quantity' => $item['quantity']
+            ]);
+            $orderItem->save();
+            $totalPrice += Item::where('id', $item['item_id'])->pluck('price')->first();
+        }
+
+        $order->fill([
+            'total_price' => $totalPrice
+        ]);
+        $order->save();
+
+        return response()->json($order, 201);
     }
 }

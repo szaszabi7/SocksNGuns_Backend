@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -21,23 +22,6 @@ class OrderItemController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $items = $request->all();
-        
-        foreach ($items as $item) {
-            OrderItem::create($item);
-        }
-        
-        return response()->json(["success" => "Rendelés sikeresen leadva"], 201);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\OrderItem  $orderItem
@@ -46,29 +30,16 @@ class OrderItemController extends Controller
     public function show($id)
     {
         $oI = OrderItem::where("order_id", $id)->get();
-        return response()->json($oI);
-    }
+        $response = [];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OrderItem  $orderItem
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\OrderItem  $orderItem
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(OrderItem $orderItem)
-    {
-        //
+        foreach ($oI as $item) {
+            $singleItem = Item::findOrFail($item['item_id']);
+            $singleItem->category;
+            array_push($response, [
+                'quantity' => $item['quantity'],
+                'item' => $singleItem
+            ]);
+        }
+        return response()->json($response);
     }
 }

@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             "name" => "testadmin",
             "email" => "testadmin@example.com",
             "is_admin" => 1,
+            "gun_authorized" => 1,
             "password" => bcrypt("TestPassword01")
         ])->create();
         \App\Models\User::factory([
