@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/item/count', [ItemController::class, 'itemCount']);
     Route::get('/user/count', [UserController::class, 'userCount']);
     Route::get('/order/count', [OrderController::class, 'orderCount']);
+    Route::get('/order/new/count', [OrderController::class, 'newOrderCount']);
+    Route::get('/orders/new', [OrderController::class, 'getNewOrders']);
 
     Route::resource('/categories', CategoryController::class);
     Route::resource('/users', UserController::class);
@@ -65,10 +67,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/personal_information/{id}', [PersonalInformationController::class, 'destroy']);
 
     Route::get('/user/orders', [OrderController::class, 'userOrders']);
+    Route::get('/order_items/{id}', [OrderItemController::class, 'show']);
     /* #endregion */
 
     Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
 
-    Route::get('/order_items', [OrderItemController::class, 'index']);
+    //Route::get('/order_items', [OrderItemController::class, 'index']);
     Route::post('/order_items', [OrderItemController::class, 'store']);
 });

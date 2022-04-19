@@ -31,11 +31,11 @@ class OrderController extends Controller
             "total_price" => "required|integer|min:0"
         ]);
 
-        Order::create([
+        $orderItem = Order::create([
             "user_id" => auth()->user()->id,
             "total_price" => $data["total_price"]
         ]);
-        return response()->json([ "success" => "Rendelés sikeresen elküldve"], 201);
+        return response()->json([ "success" => "Rendelés sikeresen létrehozva", $orderItem], 201);
     }
 
     /**
@@ -97,6 +97,16 @@ class OrderController extends Controller
 
     public function orderCount() {
         $orders = Order::all()->count();
+        return response()->json($orders);
+    }
+
+    public function newOrderCount() {
+        $orders = Order::where("status", "Feldolgozásra vár")->count();
+        return response()->json($orders);
+    }
+
+    public function getNewOrders() {
+        $orders = Order::where("status", "Feldolgozásra vár")->get();
         return response()->json($orders);
     }
 }

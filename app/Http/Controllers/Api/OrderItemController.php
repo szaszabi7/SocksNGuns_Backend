@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,7 @@ class OrderItemController extends Controller
             OrderItem::create($item);
         }
         
-        return response()->json(["success" => "Adatok sikeresen hozzáadva"], 201);
+        return response()->json(["success" => "Rendelés sikeresen leadva"], 201);
     }
 
     /**
@@ -42,9 +43,10 @@ class OrderItemController extends Controller
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderItem $orderItem)
+    public function show($id)
     {
-        //
+        $oI = OrderItem::where("order_id", $id)->get();
+        return response()->json($oI);
     }
 
     /**

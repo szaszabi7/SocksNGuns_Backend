@@ -14,7 +14,7 @@ class OrderItem extends Model
     }
 
     public function order() {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Order::class);
     }
 
     protected $fillable = [
