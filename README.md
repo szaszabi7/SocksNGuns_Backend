@@ -2,7 +2,7 @@
 
 * Hozzunk létre egy adatbázist socksnguns néven
 
-Idítsuk el a mappában található install.bat fájlt
+Indítsuk el a mappában található install.bat fájlt
 
 A fejlesztői szervert a run.bat fájl elindításával lehet futtatni.
 
