@@ -83,6 +83,7 @@ class ItemController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'image' => 'string|nullable',
+            'description' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             'category_id' => 'required'
