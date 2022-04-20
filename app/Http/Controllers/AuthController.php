@@ -47,7 +47,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken('myapptoken'/* ,  ['is-admin'] */)->plainTextToken;
 
         $response = [
             'user' => $user,

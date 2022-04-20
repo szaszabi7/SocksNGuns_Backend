@@ -31,7 +31,7 @@ Route::get('/items/search/{name}', [ItemController::class, 'search']);
 Route::resource('/reviews', ReviewController::class);
 
 //Pretektált utak
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum'/* , 'abilities:is-admin' */]], function () {
 
     /* #region  Admin */
     Route::post('/items', [ItemController::class, 'store']);

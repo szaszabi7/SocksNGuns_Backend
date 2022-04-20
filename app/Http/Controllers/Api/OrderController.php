@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy("created_at", "DESC")->get();
+        $orders = Order::orderBy("id", "DESC")->get();
         return response()->json($orders);
     }
 
@@ -40,7 +40,7 @@ class OrderController extends Controller
     //Bejelentkezett user összes rendelését adja vissza.
     public function userOrders()
     {
-        $order = Order::where('user_id', auth()->user()->id)->orderBy("created_at", "DESC")->get();
+        $order = Order::where('user_id', auth()->user()->id)->orderBy("id", "DESC")->get();
         if (is_null($order)) {
             return response()->json(['message' => 'Nincs adat'], 404);
         } else {
@@ -122,6 +122,6 @@ class OrderController extends Controller
         ]);
         $order->save();
 
-        return response()->json($order, 201);
+        return response()->json([$order, "success" => "Rendelés sikeresen leadva"], 201);
     }
 }
